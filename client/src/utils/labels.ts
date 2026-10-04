@@ -42,3 +42,25 @@ export function formatDate(isoDate: string): string {
   const [year, month, day] = isoDate.split('-');
   return `${day}.${month}.${year}`;
 }
+
+const relativeFormat = new Intl.RelativeTimeFormat('he', { numeric: 'auto' });
+
+// "לפני 3 שעות", "אתמול", "בעוד יומיים"
+export function formatRelative(iso: string, now: Date = new Date()): string {
+  const diffMinutes = Math.round((new Date(iso).getTime() - now.getTime()) / 60_000);
+  if (Math.abs(diffMinutes) < 60) return relativeFormat.format(diffMinutes, 'minute');
+  const diffHours = Math.round(diffMinutes / 60);
+  if (Math.abs(diffHours) < 24) return relativeFormat.format(diffHours, 'hour');
+  return relativeFormat.format(Math.round(diffHours / 24), 'day');
+}
+
+const timeFormat = new Intl.DateTimeFormat('he-IL', { hour: '2-digit', minute: '2-digit' });
+
+export function formatTime(iso: string): string {
+  return timeFormat.format(new Date(iso));
+}
+
+// Local calendar date as "YYYY-MM-DD", for comparing days.
+export function toLocalDateKey(date: Date): string {
+  return date.toLocaleDateString('en-CA');
+}

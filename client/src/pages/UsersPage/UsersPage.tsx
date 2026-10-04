@@ -1,6 +1,7 @@
 import { useState, type ChangeEvent, type FC, type FormEvent } from 'react';
 import { useCreateUserMutation, useListUsersQuery, type CreateUserBody } from '../../features/users/usersApi';
 import { getErrorMessage } from '../../utils/errors';
+import Avatar from '../../components/Avatar';
 import { formatDateTime, roleLabels } from '../../utils/labels';
 import styles from './UsersPage.module.css';
 
@@ -31,7 +32,10 @@ const UsersPage: FC = () => {
 
   return (
     <div className={styles.page}>
-      <h1>משתמשים</h1>
+      <header className={styles.header}>
+        <h1>צוות</h1>
+        <p>{users.length} משתמשים במערכת</p>
+      </header>
       <div className={styles.grid}>
         <section className={styles.card}>
           {isLoading ? (
@@ -49,11 +53,20 @@ const UsersPage: FC = () => {
               <tbody>
                 {users.map((user) => (
                   <tr key={user.id}>
-                    <td className={styles.name}>{user.name}</td>
+                    <td>
+                      <div className={styles.person}>
+                        <Avatar name={user.name} size="sm" />
+                        <strong>{user.name}</strong>
+                      </div>
+                    </td>
                     <td dir="ltr" className={styles.email}>
                       {user.email}
                     </td>
-                    <td>{roleLabels[user.role]}</td>
+                    <td>
+                      <span className={user.role === 'admin' ? `${styles.role} ${styles.admin}` : styles.role}>
+                        {roleLabels[user.role]}
+                      </span>
+                    </td>
                     <td className={styles.muted}>{formatDateTime(user.createdAt)}</td>
                   </tr>
                 ))}
@@ -64,6 +77,7 @@ const UsersPage: FC = () => {
 
         <form className={styles.card} onSubmit={handleSubmit}>
           <h2>הוספת משתמש</h2>
+          <p className={styles.formHint}>סוכן חדש יוכל להתחבר מיד עם האימייל והסיסמה שתגדירו.</p>
           <label>
             שם
             <input name="name" value={form.name} onChange={handleTextChange} required minLength={2} />

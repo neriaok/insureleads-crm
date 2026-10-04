@@ -1,6 +1,8 @@
 import { useState, type ChangeEvent, type FC, type FormEvent } from 'react';
 import { Link, useParams } from 'react-router';
 import AssignSelect from '../../components/AssignSelect';
+import Avatar from '../../components/Avatar';
+import InsuranceIcon from '../../components/InsuranceIcon';
 import StatusBadge from '../../components/StatusBadge';
 import {
   useCreateNoteMutation,
@@ -11,7 +13,14 @@ import {
 import { useCurrentUser } from '../../hooks/useCurrentUser';
 import { LEAD_STATUSES, RENEWABLE_INSURANCE_TYPES, type Lead, type LeadStatus } from '../../types/models';
 import { getErrorMessage } from '../../utils/errors';
-import { formatDate, formatDateTime, insuranceTypeLabels, isLeadStatus, statusLabels } from '../../utils/labels';
+import {
+  formatDate,
+  formatDateTime,
+  formatRelative,
+  insuranceTypeLabels,
+  isLeadStatus,
+  statusLabels,
+} from '../../utils/labels';
 import styles from './LeadDetailPage.module.css';
 
 // Converts an ISO date to the "YYYY-MM-DDTHH:mm" local format that datetime-local inputs use.
@@ -113,14 +122,17 @@ const Notes: FC<NotesProps> = ({ leadId }) => {
       </form>
       {isLoading && <p className={styles.muted}>טוען הערות...</p>}
       {!isLoading && notes.length === 0 && <p className={styles.muted}>אין הערות עדיין</p>}
-      <ul className={styles.notes}>
+      <ul className={styles.timeline}>
         {notes.map((note) => (
           <li key={note.id} className={note.authorId === null ? `${styles.note} ${styles.systemNote}` : styles.note}>
-            <div className={styles.noteMeta}>
-              <strong>{note.authorName ?? 'מערכת'}</strong>
-              <span>{formatDateTime(note.createdAt)}</span>
+            <span className={styles.timelineDot} aria-hidden="true" />
+            <div className={styles.noteBody}>
+              <div className={styles.noteMeta}>
+                <strong>{note.authorName ?? 'מערכת'}</strong>
+                <span title={formatDateTime(note.createdAt)}>{formatRelative(note.createdAt)}</span>
+              </div>
+              <p>{note.content}</p>
             </div>
-            <p>{note.content}</p>
           </li>
         ))}
       </ul>
@@ -146,13 +158,42 @@ const LeadDetailPage: FC = () => {
   return (
     <div className={styles.page}>
       <Link to="/dashboard" className={styles.back}>
-        → חזרה לרשימה
+        → חזרה ללוח הבקרה
       </Link>
-      <div className={styles.heading}>
-        <h1>{lead.fullName}</h1>
-        <StatusBadge status={lead.status} />
-        {lead.renewalOfLeadId && <span className={styles.renewal}>חידוש</span>}
-      </div>
+
+      <section className={styles.hero}>
+        <Avatar name={lead.fullName} size="lg" />
+        <div className={styles.heroText}>
+          <div className={styles.heading}>
+            <h1>{lead.fullName}</h1>
+            <StatusBadge status={lead.status} />
+            {lead.renewalOfLeadId && <span className={styles.renewal}>חידוש</span>}
+          </div>
+          <div className={styles.heroMeta}>
+            <span className={styles.typeChip}>
+              <span className={styles.typeIcon}>
+                <InsuranceIcon type={lead.insuranceType} />
+              </span>
+              {insuranceTypeLabels[lead.insuranceType]}
+            </span>
+            <span>התקבל {formatRelative(lead.createdAt)}</span>
+            {lead.agentName && <span>סוכן: {lead.agentName}</span>}
+          </div>
+        </div>
+        <div className={styles.actions}>
+          <a href={`tel:${lead.phone}`} className={styles.actionPrimary}>
+            חיוג
+          </a>
+          <a
+            href={`https://wa.me/972${lead.phone.replace(/^0/, '')}`}
+            target="_blank"
+            rel="noreferrer"
+            className={styles.actionWhatsapp}
+          >
+            וואטסאפ
+          </a>
+        </div>
+      </section>
 
       <div className={styles.grid}>
         <section className={styles.card}>
@@ -168,8 +209,6 @@ const LeadDetailPage: FC = () => {
             <dd>
               <span dir="ltr">{lead.email ?? '—'}</span>
             </dd>
-            <dt>סוג ביטוח</dt>
-            <dd>{insuranceTypeLabels[lead.insuranceType]}</dd>
             <dt>סוכן</dt>
             <dd>
               {user?.role === 'admin' ? <AssignSelect leadId={lead.id} agentId={lead.agentId} /> : (lead.agentName ?? '—')}
