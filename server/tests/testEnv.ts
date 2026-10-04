@@ -7,4 +7,5 @@ export function applyTestEnv(): void {
   process.env.NODE_ENV = 'test';
   delete process.env.REDIS_URL;
   delete process.env.DATABASE_URL;
+  process.env.CRON_SECRET = 'test-cron-secret';
 }

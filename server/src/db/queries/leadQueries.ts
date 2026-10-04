@@ -14,6 +14,8 @@ const LEAD_COLUMNS = `
   u.name AS "agentName",
   l.consent_at AS "consentAt",
   l.callback_at AS "callbackAt",
+  l.policy_end_date AS "policyEndDate",
+  l.renewal_of_lead_id AS "renewalOfLeadId",
   l.created_at AS "createdAt",
   l.updated_at AS "updatedAt"`;
 
@@ -103,13 +105,18 @@ export async function createLeadOrAddDuplicateNote(input: NewLeadInput): Promise
   });
 }
 
-export async function updateLeadStatus(id: number, status: LeadStatus, callbackAt: Date | null): Promise<Lead | null> {
+export async function updateLeadStatus(
+  id: number,
+  status: LeadStatus,
+  callbackAt: Date | null,
+  policyEndDate: string | null,
+): Promise<Lead | null> {
   const result = await pool.query<Lead>(
     `WITH l AS (
-       UPDATE leads SET status = $2, callback_at = $3 WHERE id = $1 RETURNING *
+       UPDATE leads SET status = $2, callback_at = $3, policy_end_date = $4 WHERE id = $1 RETURNING *
      )
      SELECT ${LEAD_COLUMNS} FROM l LEFT JOIN users u ON u.id = l.agent_id`,
-    [id, status, callbackAt],
+    [id, status, callbackAt, policyEndDate],
   );
   return result.rows[0] ?? null;
 }

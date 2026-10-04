@@ -97,3 +97,13 @@
   color: var(--color-muted);
   font-size: 0.9rem;
 }
+
+.renewal {
+  margin-inline-start: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #fff1e0;
+  color: #b25e00;
+  font-size: 0.75rem;
+  font-weight: 600;
+}

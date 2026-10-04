@@ -2,6 +2,7 @@ import cookieParser from 'cookie-parser';
 import express from 'express';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler.js';
 import { authRoutes } from './routes/authRoutes.js';
+import { cronRoutes } from './routes/cronRoutes.js';
 import { leadRoutes } from './routes/leadRoutes.js';
 import { userRoutes } from './routes/userRoutes.js';
 
@@ -18,6 +19,7 @@ app.get('/api/health', (_req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/leads', leadRoutes);
+app.use('/api/cron', cronRoutes);
 
 app.use(notFoundHandler);
 app.use(errorHandler);

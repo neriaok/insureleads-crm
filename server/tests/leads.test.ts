@@ -211,7 +211,9 @@ describe('leads', () => {
       expect((await other.patch(`/api/leads/${leadId}/status`).send({ status: 'won' })).status).toBe(403);
 
       const adminSession = await loginAs(admin);
-      expect((await adminSession.patch(`/api/leads/${leadId}/status`).send({ status: 'won' })).status).toBe(200);
+      expect(
+        (await adminSession.patch(`/api/leads/${leadId}/status`).send({ status: 'won', policyEndDate: '2027-10-01' })).status,
+      ).toBe(200);
     });
   });
 });

@@ -46,6 +46,8 @@ export const config = {
   db: readDatabaseConfig(),
   // Optional: when unset, caching is disabled and every request reads from PostgreSQL.
   redisUrl: process.env.REDIS_URL || null,
+  // Shared secret that Vercel Cron sends as a Bearer token. When unset, the cron endpoint is disabled.
+  cronSecret: process.env.CRON_SECRET || null,
   jwt: {
     secret: requireEnv('JWT_SECRET'),
     expiresInSeconds: 8 * 60 * 60,

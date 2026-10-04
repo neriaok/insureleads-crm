@@ -6,6 +6,9 @@ export type InsuranceType = (typeof INSURANCE_TYPES)[number];
 export const LEAD_STATUSES = ['new', 'in_progress', 'callback', 'quote_sent', 'won', 'lost'] as const;
 export type LeadStatus = (typeof LEAD_STATUSES)[number];
 
+// Annual policies: closing one requires a policy end date, and a renewal lead is created before it.
+export const RENEWABLE_INSURANCE_TYPES: readonly InsuranceType[] = ['car', 'home'];
+
 export type UserRole = 'admin' | 'agent';
 
 export interface User {
@@ -27,6 +30,8 @@ export interface Lead {
   agentName: string | null;
   consentAt: string;
   callbackAt: string | null;
+  policyEndDate: string | null;
+  renewalOfLeadId: number | null;
   createdAt: string;
   updatedAt: string;
 }

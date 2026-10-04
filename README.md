@@ -14,6 +14,7 @@ Lead management CRM for insurance agencies: capture leads from a public form, as
 - **Pipeline tracking:** agents move each lead through `new → in_progress → callback → quote_sent → won / lost` and schedule callbacks.
 - **Notes:** every call and interaction is logged on the lead.
 - **Role-based access:** agents see only their own leads, admins see everything.
+- **Renewal engine:** when a car or home lead is won, the agent records the policy end date. A daily job (Vercel Cron) opens a renewal lead for the same agent 45 days before the policy ends, turning a one-time sale into a recurring one.
 
 ## Tech stack
 

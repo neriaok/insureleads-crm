@@ -7,6 +7,9 @@ export type InsuranceType = (typeof INSURANCE_TYPES)[number];
 export const LEAD_STATUSES = ['new', 'in_progress', 'callback', 'quote_sent', 'won', 'lost'] as const;
 export type LeadStatus = (typeof LEAD_STATUSES)[number];
 
+// Annual policies that the renewal engine follows up on.
+export const RENEWABLE_INSURANCE_TYPES: readonly InsuranceType[] = ['car', 'home'];
+
 // Public user shape: never includes password_hash.
 export interface User {
   id: number;
@@ -31,6 +34,9 @@ export interface Lead {
   agentName: string | null;
   consentAt: Date;
   callbackAt: Date | null;
+  // DATE column, returned as "YYYY-MM-DD" (see the type parser in pool.ts).
+  policyEndDate: string | null;
+  renewalOfLeadId: number | null;
   createdAt: Date;
   updatedAt: Date;
 }

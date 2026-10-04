@@ -15,7 +15,7 @@ import {
   updateLeadStatusSchema,
 } from '../schemas/leadSchemas.js';
 import type { ApiResponse } from '../types/apiResponse.js';
-import type { Lead } from '../types/models.js';
+import { RENEWABLE_INSURANCE_TYPES, type Lead } from '../types/models.js';
 import { ApiError } from '../utils/apiError.js';
 import { getAccessibleLead } from '../utils/leadAccess.js';
 import { validate } from '../utils/validate.js';
@@ -56,10 +56,16 @@ export async function updateLeadStatus(req: Request, res: Response<ApiResponse<L
   const { id } = validate(leadIdParamsSchema, req.params);
   const body = validate(updateLeadStatusSchema, req.body);
 
-  await getAccessibleLead(id, getAuthUser(req));
-  // A callback time only makes sense while the lead is in the callback status.
+  const existing = await getAccessibleLead(id, getAuthUser(req));
+  const isRenewable = RENEWABLE_INSURANCE_TYPES.includes(existing.insuranceType);
+  if (body.status === 'won' && isRenewable && !body.policyEndDate) {
+    throw new ApiError(400, 'policyEndDate is required when a car or home lead is won');
+  }
+
+  // A callback time only makes sense in the callback status, and a policy end date only once won.
   const callbackAt = body.status === 'callback' && body.callbackAt ? new Date(body.callbackAt) : null;
-  const lead = await saveLeadStatus(id, body.status, callbackAt);
+  const policyEndDate = body.status === 'won' ? (body.policyEndDate ?? null) : null;
+  const lead = await saveLeadStatus(id, body.status, callbackAt, policyEndDate);
   if (!lead) {
     throw new ApiError(404, 'Lead not found');
   }

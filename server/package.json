@@ -10,7 +10,8 @@
     "typecheck": "tsc --noEmit",
     "migrate": "tsx --env-file=../.env src/db/migrate.ts",
     "create-admin": "tsx --env-file=../.env src/db/createAdmin.ts",
-    "test": "tsc -p tsconfig.test.json && node scripts/copyMigrations.mjs build-test/src/db && node --env-file-if-exists=../.env --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand"
+    "test": "tsc -p tsconfig.test.json && node scripts/copyMigrations.mjs build-test/src/db && node --env-file-if-exists=../.env --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand",
+    "renewals": "tsx --env-file=../.env src/db/runRenewals.ts"
   },
   "engines": {
     "node": ">=20.6"

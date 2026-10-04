@@ -9,9 +9,9 @@ import {
   useUpdateLeadStatusMutation,
 } from '../../features/leads/leadsApi';
 import { useCurrentUser } from '../../hooks/useCurrentUser';
-import { LEAD_STATUSES, type Lead, type LeadStatus } from '../../types/models';
+import { LEAD_STATUSES, RENEWABLE_INSURANCE_TYPES, type Lead, type LeadStatus } from '../../types/models';
 import { getErrorMessage } from '../../utils/errors';
-import { formatDateTime, insuranceTypeLabels, isLeadStatus, statusLabels } from '../../utils/labels';
+import { formatDate, formatDateTime, insuranceTypeLabels, isLeadStatus, statusLabels } from '../../utils/labels';
 import styles from './LeadDetailPage.module.css';
 
 // Converts an ISO date to the "YYYY-MM-DDTHH:mm" local format that datetime-local inputs use.
@@ -28,6 +28,8 @@ interface StatusFormProps {
 const StatusForm: FC<StatusFormProps> = ({ lead }) => {
   const [status, setStatus] = useState<LeadStatus>(lead.status);
   const [callbackAt, setCallbackAt] = useState(lead.callbackAt ? toLocalInputValue(lead.callbackAt) : '');
+  const [policyEndDate, setPolicyEndDate] = useState(lead.policyEndDate ?? '');
+  const needsPolicyEndDate = status === 'won' && RENEWABLE_INSURANCE_TYPES.includes(lead.insuranceType);
   const [updateStatus, { isLoading, error }] = useUpdateLeadStatusMutation();
 
   const handleStatusChange = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -41,6 +43,7 @@ const StatusForm: FC<StatusFormProps> = ({ lead }) => {
       id: lead.id,
       status,
       callbackAt: status === 'callback' && callbackAt ? new Date(callbackAt).toISOString() : undefined,
+      policyEndDate: status === 'won' && policyEndDate ? policyEndDate : undefined,
     });
   };
 
@@ -60,6 +63,13 @@ const StatusForm: FC<StatusFormProps> = ({ lead }) => {
         <label>
           מועד לחזור
           <input type="datetime-local" value={callbackAt} onChange={(e) => setCallbackAt(e.target.value)} required />
+        </label>
+      )}
+      {needsPolicyEndDate && (
+        <label>
+          תאריך סיום הפוליסה
+          <input type="date" value={policyEndDate} onChange={(e) => setPolicyEndDate(e.target.value)} required />
+          <span className={styles.hint}>ליד חידוש ייפתח אוטומטית 45 יום לפני התאריך</span>
         </label>
       )}
       <button type="submit" disabled={isLoading}>
@@ -141,6 +151,7 @@ const LeadDetailPage: FC = () => {
       <div className={styles.heading}>
         <h1>{lead.fullName}</h1>
         <StatusBadge status={lead.status} />
+        {lead.renewalOfLeadId && <span className={styles.renewal}>חידוש</span>}
       </div>
 
       <div className={styles.grid}>
@@ -165,6 +176,20 @@ const LeadDetailPage: FC = () => {
             </dd>
             <dt>לחזור ב-</dt>
             <dd>{lead.callbackAt ? formatDateTime(lead.callbackAt) : '—'}</dd>
+            {lead.policyEndDate && (
+              <>
+                <dt>סיום פוליסה</dt>
+                <dd>{formatDate(lead.policyEndDate)}</dd>
+              </>
+            )}
+            {lead.renewalOfLeadId && (
+              <>
+                <dt>חידוש של</dt>
+                <dd>
+                  <Link to={`/leads/${lead.renewalOfLeadId}`}>ליד #{lead.renewalOfLeadId}</Link>
+                </dd>
+              </>
+            )}
             <dt>הסכמה לפרטיות</dt>
             <dd>{formatDateTime(lead.consentAt)}</dd>
             <dt>נוצר</dt>

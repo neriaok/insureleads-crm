@@ -36,3 +36,9 @@ const dateTimeFormat = new Intl.DateTimeFormat('he-IL', { dateStyle: 'short', ti
 export function formatDateTime(iso: string): string {
   return dateTimeFormat.format(new Date(iso));
 }
+
+// Formats a 'YYYY-MM-DD' date without creating a Date, so no timezone can shift the day.
+export function formatDate(isoDate: string): string {
+  const [year, month, day] = isoDate.split('-');
+  return `${day}.${month}.${year}`;
+}

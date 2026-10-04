@@ -31,6 +31,8 @@ export const updateLeadStatusSchema = z
   .object({
     status: z.enum(LEAD_STATUSES),
     callbackAt: z.iso.datetime({ offset: true }).optional(),
+    // Required by the controller when a renewable (car/home) lead is marked as won.
+    policyEndDate: z.iso.date().optional(),
   })
   .refine((body) => body.status !== 'callback' || body.callbackAt !== undefined, {
     message: 'callbackAt is required when status is callback',

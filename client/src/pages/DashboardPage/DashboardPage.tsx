@@ -68,7 +68,10 @@ const DashboardPage: FC = () => {
             <tbody>
               {visibleLeads.map((lead) => (
                 <tr key={lead.id} onClick={() => navigate(`/leads/${lead.id}`)}>
-                  <td className={styles.name}>{lead.fullName}</td>
+                  <td className={styles.name}>
+                    {lead.fullName}
+                    {lead.renewalOfLeadId && <span className={styles.renewal}>חידוש</span>}
+                  </td>
                   <td dir="ltr" className={styles.phone}>
                     {lead.phone}
                   </td>

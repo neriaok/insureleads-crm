@@ -13,6 +13,7 @@ interface UpdateStatusArgs {
   id: number;
   status: LeadStatus;
   callbackAt?: string;
+  policyEndDate?: string;
 }
 
 export const leadsApi = baseApi.injectEndpoints({

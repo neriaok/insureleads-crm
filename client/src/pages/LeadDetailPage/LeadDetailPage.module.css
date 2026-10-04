@@ -108,3 +108,18 @@
     grid-template-columns: 1fr;
   }
 }
+
+.hint {
+  font-weight: 400;
+  font-size: 0.8rem;
+  color: var(--color-muted);
+}
+
+.renewal {
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: #fff1e0;
+  color: #b25e00;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
