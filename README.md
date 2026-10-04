@@ -32,11 +32,26 @@ Lead management CRM for insurance agencies: capture leads from a public form, as
 - Docker Desktop (with Docker Compose)
 - Git
 
-Setup instructions will be added as the project setup stage is completed.
+### Setup
+
+```bash
+# 1. Create your local environment file and set your own password
+cp .env.example .env
+
+# 2. Start PostgreSQL
+docker compose up -d
+
+# 3. Install server dependencies and start the dev server
+cd server
+npm install
+npm run dev
+```
+
+The API runs at `http://localhost:4000`. Check it with `GET /api/health`.
 
 ## Roadmap
 
-- [ ] Project setup: Docker, PostgreSQL, Express + TypeScript
+- [x] Project setup: Docker, PostgreSQL, Express + TypeScript
 - [ ] Database schema & migrations
 - [ ] Authentication (JWT, roles)
 - [ ] Leads API (create, list, status, assign)
