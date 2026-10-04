@@ -1,0 +1,2 @@
+# Normalize line endings so Windows and Linux (CI) checkouts match
+* text=auto eol=lf
