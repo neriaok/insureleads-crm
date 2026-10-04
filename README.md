@@ -4,7 +4,7 @@ Lead management CRM for insurance agencies: capture leads from a public form, as
 
 [![CI](https://github.com/neriaok/insureleads-crm/actions/workflows/ci.yml/badge.svg)](https://github.com/neriaok/insureleads-crm/actions/workflows/ci.yml)
 
-> 🚧 **In active development.** See the [Roadmap](#roadmap) for progress.
+**Live demo:** https://insureleads-crm.vercel.app (public lead form). The agent dashboard is at `/login`.
 
 ## What it does
 
