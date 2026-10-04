@@ -18,7 +18,11 @@ function requireEnvNumber(name: string): number {
   return value;
 }
 
+const nodeEnv = process.env.NODE_ENV ?? 'development';
+
 export const config = {
+  nodeEnv,
+  isProduction: nodeEnv === 'production',
   port: requireEnvNumber('PORT'),
   db: {
     host: requireEnv('POSTGRES_HOST'),
@@ -26,5 +30,9 @@ export const config = {
     user: requireEnv('POSTGRES_USER'),
     password: requireEnv('POSTGRES_PASSWORD'),
     database: requireEnv('POSTGRES_DB'),
+  },
+  jwt: {
+    secret: requireEnv('JWT_SECRET'),
+    expiresInSeconds: 8 * 60 * 60,
   },
 } as const;

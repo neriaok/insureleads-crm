@@ -45,6 +45,10 @@ docker compose up -d
 cd server
 npm install
 npm run migrate
+
+# 4. Create the first admin user (admins create agents from the app)
+npm run create-admin -- --name "Dana Admin" --email admin@example.com --password choose-a-password
+
 npm run dev
 ```
 
@@ -54,7 +58,7 @@ The API runs at `http://localhost:4000`. Check it with `GET /api/health`.
 
 - [x] Project setup: Docker, PostgreSQL, Express + TypeScript
 - [x] Database schema & migrations
-- [ ] Authentication (JWT, roles)
+- [x] Authentication (JWT, roles)
 - [ ] Leads API (create, list, status, assign)
 - [ ] Notes API
 - [ ] Public lead form (React)
