@@ -53,7 +53,7 @@ The API runs at `http://localhost:4000`. Check it with `GET /api/health`.
 ## Roadmap
 
 - [x] Project setup: Docker, PostgreSQL, Express + TypeScript
-- [ ] Database schema & migrations
+- [x] Database schema & migrations
 - [ ] Authentication (JWT, roles)
 - [ ] Leads API (create, list, status, assign)
 - [ ] Notes API
