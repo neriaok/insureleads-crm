@@ -41,9 +41,10 @@ cp .env.example .env
 # 2. Start PostgreSQL
 docker compose up -d
 
-# 3. Install server dependencies and start the dev server
+# 3. Install server dependencies, create the tables and start the dev server
 cd server
 npm install
+npm run migrate
 npm run dev
 ```
 
