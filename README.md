@@ -59,6 +59,16 @@ npm run dev
 
 Open `http://localhost:5173` for the public lead form, and `/login` for the agent dashboard. The client proxies `/api` to the API at `http://localhost:4000`.
 
+## Running the tests
+
+The API tests use Jest and Supertest against a real PostgreSQL database. They create and migrate a separate `<POSTGRES_DB>_test` database automatically, so development data is never touched.
+
+```bash
+docker compose up -d
+cd server
+npm test
+```
+
 ## Roadmap
 
 - [x] Project setup: Docker, PostgreSQL, Express + TypeScript
@@ -68,6 +78,6 @@ Open `http://localhost:5173` for the public lead form, and `/login` for the agen
 - [x] Notes API
 - [x] Public lead form (React)
 - [x] Agent dashboard (React + RTK Query)
-- [ ] Tests (Jest + Supertest)
+- [x] Tests (Jest + Supertest)
 - [ ] CI with GitHub Actions
 - [x] Caching with Redis

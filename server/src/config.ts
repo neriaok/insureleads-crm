@@ -23,6 +23,8 @@ const nodeEnv = process.env.NODE_ENV ?? 'development';
 export const config = {
   nodeEnv,
   isProduction: nodeEnv === 'production',
+  // bcrypt is slow on purpose; tests use the minimum cost so the suite stays fast.
+  bcryptRounds: nodeEnv === 'test' ? 4 : 12,
   port: requireEnvNumber('PORT'),
   db: {
     host: requireEnv('POSTGRES_HOST'),

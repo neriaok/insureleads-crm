@@ -5,7 +5,6 @@ import { config } from '../config.js';
 import { USER_ROLES, type AuthUser } from '../types/models.js';
 
 export const AUTH_COOKIE_NAME = 'token';
-const BCRYPT_ROUNDS = 12;
 
 export const authCookieOptions: CookieOptions = {
   httpOnly: true,
@@ -15,7 +14,7 @@ export const authCookieOptions: CookieOptions = {
 };
 
 export function hashPassword(password: string): Promise<string> {
-  return bcrypt.hash(password, BCRYPT_ROUNDS);
+  return bcrypt.hash(password, config.bcryptRounds);
 }
 
 export function verifyPassword(password: string, passwordHash: string): Promise<boolean> {
