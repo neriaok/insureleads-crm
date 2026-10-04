@@ -79,7 +79,7 @@ insureleads-crm/
 - `callback_at` (nullable), `created_at`, `updated_at`
 
 **lead_notes**
-- `id`, `lead_id` (FK to `leads`), `author_id` (FK to `users`), `content`, `created_at`
+- `id`, `lead_id` (FK to `leads`), `author_id` (FK to `users`, nullable: `NULL` means a system note, e.g. a duplicate submission), `content`, `created_at`
 
 Rules:
 - `status`, `role` and `insurance_type` are restricted with `CHECK` constraints.
