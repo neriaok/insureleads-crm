@@ -1,0 +1,149 @@
+.page {
+  background: var(--color-surface);
+}
+
+.hero {
+  background:
+    radial-gradient(circle at 90% 10%, rgb(99 102 241 / 40%), transparent 45%),
+    radial-gradient(circle at 10% 90%, rgb(16 185 129 / 20%), transparent 40%),
+    var(--color-navy);
+}
+
+.heroInner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 64px 24px 80px;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 56px;
+  align-items: center;
+}
+
+.heroText {
+  color: #fff;
+}
+
+.heroText h1 {
+  margin-top: 18px;
+  font-size: clamp(2rem, 4.5vw, 3.1rem);
+  line-height: 1.15;
+  font-weight: 800;
+}
+
+.heroText p {
+  margin: 18px 0 0;
+  max-width: 520px;
+  font-size: 1.12rem;
+  line-height: 1.7;
+  color: rgb(255 255 255 / 78%);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 10%);
+  border: 1px solid rgb(255 255 255 / 15%);
+  font-weight: 700;
+}
+
+.badgeIcon {
+  width: 20px;
+  height: 20px;
+  color: var(--color-accent);
+}
+
+.section {
+  padding: 80px 24px;
+}
+
+.alt {
+  background: var(--color-bg);
+}
+
+.inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.narrow {
+  max-width: 760px;
+}
+
+.title {
+  margin-bottom: 36px;
+  text-align: center;
+  font-size: clamp(1.6rem, 3.2vw, 2.2rem);
+  font-weight: 800;
+  color: var(--color-navy);
+}
+
+.coverages {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 18px;
+}
+
+.coverage {
+  padding: 24px;
+  border-radius: 16px;
+  border: 1px solid var(--color-border);
+  border-top: 4px solid var(--color-primary);
+}
+
+.coverage h3 {
+  color: var(--color-navy);
+}
+
+.coverage p {
+  margin: 8px 0 0;
+  line-height: 1.7;
+  color: var(--color-muted);
+}
+
+.others {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.other {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  color: var(--color-navy);
+  text-decoration: none;
+  font-weight: 700;
+  transition:
+    border-color 0.15s,
+    transform 0.15s;
+}
+
+.other:hover {
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+}
+
+.otherIcon {
+  width: 22px;
+  height: 22px;
+  color: var(--color-primary);
+}
+
+@media (max-width: 900px) {
+  .heroInner {
+    grid-template-columns: 1fr;
+    padding: 44px 16px 56px;
+    gap: 32px;
+  }
+
+  .section {
+    padding: 56px 16px;
+  }
+}

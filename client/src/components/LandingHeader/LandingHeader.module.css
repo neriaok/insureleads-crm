@@ -1,0 +1,128 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgb(15 23 42 / 88%);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgb(255 255 255 / 8%);
+}
+
+.inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.logo {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+  font-size: 0.85rem;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-inline-start: auto;
+}
+
+.link {
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: rgb(255 255 255 / 78%);
+  text-decoration: none;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.link:hover {
+  color: #fff;
+  background: rgb(255 255 255 / 8%);
+}
+
+.active {
+  color: #fff;
+  background: rgb(255 255 255 / 12%);
+}
+
+.login {
+  padding: 8px 14px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.cta {
+  padding: 9px 18px;
+  border-radius: 999px;
+  background: var(--color-accent);
+  color: var(--color-navy);
+  text-decoration: none;
+  font-weight: 800;
+  white-space: nowrap;
+  transition: transform 0.15s;
+}
+
+.cta:hover {
+  transform: translateY(-1px);
+}
+
+.menuButton {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  margin-inline-start: auto;
+  padding: 10px;
+  background: transparent;
+}
+
+.menuButton span {
+  width: 22px;
+  height: 2px;
+  background: #fff;
+  border-radius: 2px;
+}
+
+@media (max-width: 960px) {
+  .menuButton {
+    display: flex;
+  }
+
+  .nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    inset-inline: 0;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 12px 24px 20px;
+    background: var(--color-navy);
+  }
+
+  .navOpen {
+    display: flex;
+  }
+
+  .cta {
+    text-align: center;
+    margin-top: 8px;
+  }
+}
