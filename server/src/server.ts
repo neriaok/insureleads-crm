@@ -1,4 +1,6 @@
-// Temporary entry point to verify the TypeScript toolchain.
+import { config } from './config.js';
+
+// Temporary entry point: verifies that config loads.
 // It will start the Express app once app.ts exists.
-console.log(`InsureLeads server starting on Node ${process.version}`);
-console.log(`POSTGRES_DB from .env: ${process.env.POSTGRES_DB ?? '(not set)'}`);
+console.log(`InsureLeads server starting on port ${config.port}`);
+console.log(`Database: ${config.db.user}@${config.db.host}:${config.db.port}/${config.db.database}`);
