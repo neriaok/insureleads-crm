@@ -50,9 +50,14 @@ npm run migrate
 npm run create-admin -- --name "Dana Admin" --email admin@example.com --password choose-a-password
 
 npm run dev
+
+# 5. In a second terminal, start the React client
+cd client
+npm install
+npm run dev
 ```
 
-The API runs at `http://localhost:4000`. Check it with `GET /api/health`.
+Open `http://localhost:5173` for the public lead form, and `/login` for the agent dashboard. The client proxies `/api` to the API at `http://localhost:4000`.
 
 ## Roadmap
 
@@ -61,8 +66,8 @@ The API runs at `http://localhost:4000`. Check it with `GET /api/health`.
 - [x] Authentication (JWT, roles)
 - [x] Leads API (create, list, status, assign)
 - [x] Notes API
-- [ ] Public lead form (React)
-- [ ] Agent dashboard (React + RTK Query)
+- [x] Public lead form (React)
+- [x] Agent dashboard (React + RTK Query)
 - [ ] Tests (Jest + Supertest)
 - [ ] CI with GitHub Actions
 - [ ] Caching with Redis

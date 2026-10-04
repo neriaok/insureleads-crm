@@ -1,0 +1,38 @@
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.new {
+  background: #e4ecff;
+  color: #2353d6;
+}
+
+.in_progress {
+  background: #fff3d6;
+  color: #9a6200;
+}
+
+.callback {
+  background: #f3e5ff;
+  color: #7b2cbf;
+}
+
+.quote_sent {
+  background: #ddf4f7;
+  color: #0b7285;
+}
+
+.won {
+  background: #dcf5e5;
+  color: #1f8a4c;
+}
+
+.lost {
+  background: #eceef2;
+  color: #667085;
+}
