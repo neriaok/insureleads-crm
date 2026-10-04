@@ -20,19 +20,30 @@ function requireEnvNumber(name: string): number {
 
 const nodeEnv = process.env.NODE_ENV ?? 'development';
 
-export const config = {
-  nodeEnv,
-  isProduction: nodeEnv === 'production',
-  // bcrypt is slow on purpose; tests use the minimum cost so the suite stays fast.
-  bcryptRounds: nodeEnv === 'test' ? 4 : 12,
-  port: requireEnvNumber('PORT'),
-  db: {
+// Hosted databases (Neon, Vercel Postgres, ...) provide one connection string; locally
+// the separate POSTGRES_* variables are shared with docker-compose.
+function readDatabaseConfig() {
+  const connectionString = process.env.DATABASE_URL;
+  if (connectionString) {
+    return { connectionString };
+  }
+  return {
     host: requireEnv('POSTGRES_HOST'),
     port: requireEnvNumber('POSTGRES_PORT'),
     user: requireEnv('POSTGRES_USER'),
     password: requireEnv('POSTGRES_PASSWORD'),
     database: requireEnv('POSTGRES_DB'),
-  },
+  };
+}
+
+export const config = {
+  nodeEnv,
+  isProduction: nodeEnv === 'production',
+  // bcrypt is slow on purpose; tests use the minimum cost so the suite stays fast.
+  bcryptRounds: nodeEnv === 'test' ? 4 : 12,
+  // Only used by server.ts; serverless platforms do not need a port.
+  port: process.env.PORT ? requireEnvNumber('PORT') : 4000,
+  db: readDatabaseConfig(),
   // Optional: when unset, caching is disabled and every request reads from PostgreSQL.
   redisUrl: process.env.REDIS_URL || null,
   jwt: {

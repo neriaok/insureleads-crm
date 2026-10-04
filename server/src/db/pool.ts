@@ -2,13 +2,7 @@ import pg from 'pg';
 import { config } from '../config.js';
 
 // A pool keeps a few open connections and reuses them across requests.
-export const pool = new pg.Pool({
-  host: config.db.host,
-  port: config.db.port,
-  user: config.db.user,
-  password: config.db.password,
-  database: config.db.database,
-});
+export const pool = new pg.Pool(config.db);
 
 // An idle connection can fail (for example if the database restarts).
 // Without this listener the error would crash the whole process.

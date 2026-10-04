@@ -6,4 +6,5 @@ export function applyTestEnv(): void {
     process.env.POSTGRES_TEST_DB ?? (devDatabase.endsWith('_test') ? devDatabase : `${devDatabase}_test`);
   process.env.NODE_ENV = 'test';
   delete process.env.REDIS_URL;
+  delete process.env.DATABASE_URL;
 }

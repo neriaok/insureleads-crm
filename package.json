@@ -1,0 +1,9 @@
+{
+  "name": "insureleads-crm",
+  "private": true,
+  "type": "module",
+  "description": "Deployment wrapper: builds server/ and client/ for Vercel. Develop inside each folder.",
+  "engines": {
+    "node": "22.x"
+  }
+}
