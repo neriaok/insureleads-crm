@@ -52,6 +52,9 @@ npm run migrate
 # 4. Create the first admin user (admins create agents from the app)
 npm run create-admin -- --name "Dana Admin" --email admin@example.com --password choose-a-password
 
+# Optional: demo agents and leads of every type and status
+npm run seed:demo
+
 npm run dev
 
 # 5. In a second terminal, start the React client
