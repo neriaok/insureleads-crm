@@ -2,6 +2,7 @@ import cookieParser from 'cookie-parser';
 import express from 'express';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler.js';
 import { authRoutes } from './routes/authRoutes.js';
+import { leadRoutes } from './routes/leadRoutes.js';
 import { userRoutes } from './routes/userRoutes.js';
 
 // Builds the Express app without starting it, so tests can use it directly.
@@ -16,6 +17,7 @@ app.get('/api/health', (_req, res) => {
 
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/leads', leadRoutes);
 
 app.use(notFoundHandler);
 app.use(errorHandler);

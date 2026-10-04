@@ -59,8 +59,8 @@ The API runs at `http://localhost:4000`. Check it with `GET /api/health`.
 - [x] Project setup: Docker, PostgreSQL, Express + TypeScript
 - [x] Database schema & migrations
 - [x] Authentication (JWT, roles)
-- [ ] Leads API (create, list, status, assign)
-- [ ] Notes API
+- [x] Leads API (create, list, status, assign)
+- [x] Notes API
 - [ ] Public lead form (React)
 - [ ] Agent dashboard (React + RTK Query)
 - [ ] Tests (Jest + Supertest)
