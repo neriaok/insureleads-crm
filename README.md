@@ -38,7 +38,7 @@ Lead management CRM for insurance agencies: capture leads from a public form, as
 # 1. Create your local environment file and set your own password
 cp .env.example .env
 
-# 2. Start PostgreSQL
+# 2. Start PostgreSQL and Redis
 docker compose up -d
 
 # 3. Install server dependencies, create the tables and start the dev server
@@ -70,4 +70,4 @@ Open `http://localhost:5173` for the public lead form, and `/login` for the agen
 - [x] Agent dashboard (React + RTK Query)
 - [ ] Tests (Jest + Supertest)
 - [ ] CI with GitHub Actions
-- [ ] Caching with Redis
+- [x] Caching with Redis

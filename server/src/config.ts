@@ -31,6 +31,8 @@ export const config = {
     password: requireEnv('POSTGRES_PASSWORD'),
     database: requireEnv('POSTGRES_DB'),
   },
+  // Optional: when unset, caching is disabled and every request reads from PostgreSQL.
+  redisUrl: process.env.REDIS_URL || null,
   jwt: {
     secret: requireEnv('JWT_SECRET'),
     expiresInSeconds: 8 * 60 * 60,
