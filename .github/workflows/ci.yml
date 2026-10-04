@@ -1,0 +1,66 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  server:
+    name: Server (typecheck + tests)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: server
+
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: insureleads
+          POSTGRES_PASSWORD: ci_password
+          POSTGRES_DB: insureleads
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U insureleads"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      PORT: 4000
+      POSTGRES_HOST: localhost
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: insureleads
+      POSTGRES_PASSWORD: ci_password
+      POSTGRES_DB: insureleads
+      JWT_SECRET: ci-only-secret-not-used-anywhere-else
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: server/package-lock.json
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+
+  client:
+    name: Client (typecheck + build)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: client
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: client/package-lock.json
+      - run: npm ci
+      - run: npm run build

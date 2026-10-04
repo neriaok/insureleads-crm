@@ -2,6 +2,8 @@
 
 Lead management CRM for insurance agencies: capture leads from a public form, assign them to agents, and track every call through to a quote.
 
+[![CI](https://github.com/neriaok/insureleads-crm/actions/workflows/ci.yml/badge.svg)](https://github.com/neriaok/insureleads-crm/actions/workflows/ci.yml)
+
 > 🚧 **In active development.** See the [Roadmap](#roadmap) for progress.
 
 ## What it does
@@ -79,5 +81,5 @@ npm test
 - [x] Public lead form (React)
 - [x] Agent dashboard (React + RTK Query)
 - [x] Tests (Jest + Supertest)
-- [ ] CI with GitHub Actions
+- [x] CI with GitHub Actions
 - [x] Caching with Redis
